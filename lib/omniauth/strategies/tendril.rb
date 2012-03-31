@@ -38,14 +38,20 @@ module OmniAuth
       end
 
       def raw_info
+        @raw_info ||= MultiJson.decode user_info_request
+      end
+
+      protected
+
+      def user_info_request
         conn = Faraday.new('https://dev.tendrilinc.com')
         response = conn.get do |req|
           req.url '/connect/user/current-user'
           req.headers['Accept'] = 'application/json'
           req.headers['Content-Type'] = 'application/json'
-          req.headers['Access_Token'] = access_token.token
+          req.headers['Access_Token'] = authentication.token
         end
-        @raw_info ||= MultiJson.decode response.env[:body]
+        response.env[:body]
       end
 
     end
