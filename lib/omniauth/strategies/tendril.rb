@@ -49,7 +49,7 @@ module OmniAuth
           req.url '/connect/user/current-user'
           req.headers['Accept'] = 'application/json'
           req.headers['Content-Type'] = 'application/json'
-          req.headers['Access_Token'] = authentication.token
+          req.headers['Access_Token'] = access_token.token
         end
         response.env[:body]
       end
